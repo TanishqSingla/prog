@@ -1,3 +1,4 @@
+#include <cctype>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -50,23 +51,21 @@ namespace Lexer
 						break;
 
 					case IN_IDENTIFIER:
-						if(isspace(c) || c == '\n')
-							this->state = OUT;
-
-						if (!isalnum(c))
+						if(
+								isspace(c) || 
+								c == '\n' || 
+								!isalnum(c)
+							) 
 							this->state = OUT;
 
 						break;
 
 					case IN_STR:
-						if (c == '"')
+						if (c == '"' || c == '\n')
 							this->state = OUT;
 
 						if (c == '\\')
 							this->state = IN_ESC;
-
-						if (c == '\n')
-							this->state = OUT;
 
 						break;
 					case IN_ESC:
@@ -114,14 +113,10 @@ namespace Lexer
 								continue;
 
 							if (last_state == IN_IDENTIFIER)
-							{
 								this->tokens.push_back(Token{ IDENTIFIER, value });
-							}
 
 							if (last_state == IN_STR)
-							{
 								this->tokens.push_back(Token{ LITERAL, value });
-							}
 
 							last_state = OUT;
 							value = "";

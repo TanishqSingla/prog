@@ -1,6 +1,7 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
+#include "lexer.cpp"
 
 void read_file_to_str(const char* filename, std::string& destination)
 {
@@ -29,4 +30,8 @@ int main(int argc, char** argv)
 	std::string source;
 
 	read_file_to_str(argv[1], source);
+
+	auto lexer = Lexer::Lexer(source);
+	lexer.scan();
+	lexer.print_tokens();
 }

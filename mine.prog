@@ -1,1 +1,6 @@
+print("hello")
 print("hello world")
+print("hel\"o world")
+print = 1123
+
+return "hello"

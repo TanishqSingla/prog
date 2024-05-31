@@ -54,7 +54,7 @@ namespace Lexer
 						if(
 								isspace(c) || 
 								c == '\n' || 
-								!isalnum(c)
+								(!isalnum(c) && c != '_')
 							) 
 							this->state = OUT;
 
